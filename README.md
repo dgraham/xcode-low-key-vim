@@ -1,6 +1,8 @@
 # Xcode Low Key Vim Theme
 
-A Vim theme using Xcode's Low Key color palette.
+A Vim theme using Xcode's Low Key color palette. There's also a
+[version of this theme](https://github.com/dgraham/xcode-low-key-syntax)
+for [Atom](https://atom.io).
 
 ## Installation
 
