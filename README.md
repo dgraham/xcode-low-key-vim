@@ -24,3 +24,7 @@ cd ~/.vim/colors
 git clone https://github.com/dgraham/xcode-low-key-vim.git
 cp xcode-low-key-vim/colors/*.vim .
 ```
+
+## Terminal
+
+For use in Terminal.app, install the [Xcode Low Key](Xcode Low Key.terminal) color profile.
