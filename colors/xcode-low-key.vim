@@ -17,14 +17,14 @@ let s:very_light_gray = "e0e0e0" " 06
 let s:white =           "ffffff" " 07
 
 " Colors
-let s:red =             "cc6666" " 08
+let s:red =             "b02428" " 08
 let s:orange =          "de935f" " 09
 let s:light_orange =    "f0c674" " 0A
 let s:green =           "b5bd68" " 0B
 let s:cyan =            "8abeb7" " 0C
 let s:blue =            "81a2be" " 0D
 let s:purple =          "b294bb" " 0E
-let s:dark_red =        "a3685a" " 0F
+let s:dark_red =        "89120a" " 0F
 
 " Low Key
 let s:invisible =       "7f7f7f"
