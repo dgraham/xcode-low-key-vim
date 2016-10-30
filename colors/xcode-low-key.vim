@@ -78,6 +78,7 @@ call <sid>hi("PMenu",         s:black, s:very_light_gray, "0", "7", "none")
 call <sid>hi("PMenuSbar",     s:black, s:light_gray, "0", "8", "none")
 call <sid>hi("PMenuSel",      s:black, s:light_gray, "15", "8", "none")
 call <sid>hi("PMenuThumb",    s:black, s:dark_gray, "0", "8", "none")
+call <sid>hi("Search",        s:black, "fff595", "0", "11", "none")
 
 " Standard syntax highlighting
 call <sid>hi("Comment",      s:comment, "", "2", "", "")
