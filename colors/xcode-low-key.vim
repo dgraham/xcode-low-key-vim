@@ -4,7 +4,6 @@
 hi clear
 syntax reset
 let g:colors_name = "xcode-low-key"
-set background=light
 
 " Grayscale
 let s:black =           "1d1f21" " 00
@@ -66,8 +65,8 @@ call <sid>hi("Underlined",    s:light_blue, "", "12", "", "none")
 call <sid>hi("Visual",        "", s:selection, "", "7", "")
 call <sid>hi("WarningMsg",    s:red, "", "9", "", "")
 call <sid>hi("Title",         s:dark_blue, "", "4", "", "none")
-call <sid>hi("NonText",       s:white, s:white, "15", "15", "")
-call <sid>hi("Normal",        s:black, "", "0", "", "")
+call <sid>hi("NonText",       s:white, s:white, "", "none", "")
+call <sid>hi("Normal",        s:black, "", "", "none", "")
 call <sid>hi("LineNr",        s:very_light_gray, s:white, "7", "15", "")
 call <sid>hi("StatusLine",    "080808", "eeeeee", "0", "7", "bold")
 call <sid>hi("StatusLineNC",  "b2b2b2", "eeeeee", "8", "7", "none")
