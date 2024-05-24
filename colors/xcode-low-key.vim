@@ -38,6 +38,11 @@ let s:class =           s:light_blue
 let s:function =        s:light_blue
 let s:constant =        s:light_blue
 
+let s:fg = "0"
+if &background == "dark"
+  let s:fg = "15"
+endif
+
 " Highlighting function
 fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr)
   if a:guifg != ""
@@ -67,7 +72,7 @@ call <sid>hi("WarningMsg",    s:red, "", "9", "", "")
 call <sid>hi("Title",         s:dark_blue, "", "4", "", "none")
 call <sid>hi("NonText",       s:white, s:white, "", "none", "")
 call <sid>hi("Normal",        s:black, "", "", "none", "")
-call <sid>hi("LineNr",        s:very_light_gray, s:white, "7", "15", "")
+call <sid>hi("LineNr",        s:very_light_gray, s:white, "7", "none", "")
 call <sid>hi("StatusLine",    "080808", "eeeeee", "0", "7", "bold")
 call <sid>hi("StatusLineNC",  "b2b2b2", "eeeeee", "8", "7", "none")
 call <sid>hi("VertSplit",     s:white, s:white, "15", "15", "")
@@ -75,13 +80,14 @@ call <sid>hi("CursorLine",    "", s:white, "", "", "none")
 call <sid>hi("CursorLineNr",  s:gray, s:very_light_gray, "8", "7", "none")
 call <sid>hi("CursorLineFold",s:gray, s:very_light_gray, "8", "7", "none")
 call <sid>hi("CursorLineSign",s:gray, s:very_light_gray, "8", "7", "none")
-call <sid>hi("FoldColumn",    s:gray, s:white, "8", "15", "")
-call <sid>hi("SignColumn",    s:white, s:white, "15", "15", "")
+call <sid>hi("FoldColumn",    s:gray, s:white, "8", "none", "")
+call <sid>hi("SignColumn",    s:white, s:white, "15", "none", "")
 call <sid>hi("PMenu",         s:black, s:very_light_gray, "0", "7", "none")
 call <sid>hi("PMenuSbar",     s:black, s:light_gray, "0", "8", "none")
 call <sid>hi("PMenuSel",      s:black, s:light_gray, "15", "8", "none")
 call <sid>hi("PMenuThumb",    s:black, s:dark_gray, "0", "8", "none")
-call <sid>hi("Search",        s:black, "fff595", "0", "11", "none")
+call <sid>hi("Search",        s:black, "fff595", s:fg, "11", "none")
+call <sid>hi("CurSearch",     s:black, "fff595", s:fg, "11", "none")
 call <sid>hi("TabLine",       "b2b2b2", "eeeeee", "8", "7", "none")
 call <sid>hi("TabLineFill",   "080808", "eeeeee", "0", "7", "none")
 call <sid>hi("TabLineSel",    s:black, s:white, "0", "15", "none")
