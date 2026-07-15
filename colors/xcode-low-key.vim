@@ -1,130 +1,156 @@
 " Xcode Low Key (https://github.com/dgraham/xcode-low-key-vim)
 
-" Theme setup
 hi clear
-syntax reset
+if exists("syntax_on")
+  syntax reset
+endif
 let g:colors_name = "xcode-low-key"
 
-" Grayscale
-let s:black =           "1d1f21" " 00
-let s:light_black =     "282a2e" " 01
-let s:very_dark_gray =  "373b41" " 02
-let s:dark_gray =       "969896" " 03
-let s:gray =            "b4b7b4" " 04
-let s:light_gray =      "c5c8c6" " 05
-let s:very_light_gray = "e0e0e0" " 06
-let s:white =           "ffffff" " 07
+" Terminal color palette
+" let s:black        = "#000000"  " 00 Black        ANSI Black
+" let s:dark_red     = "#8b0000"  " 01 DarkRed      ANSI Red
+" let s:dark_green   = "#435138"  " 02 DarkGreen    ANSI Green
+" let s:brown        = "#70682d"  " 03 Brown        ANSI Yellow
+" let s:dark_blue    = "#262c6a"  " 04 DarkBlue     ANSI Blue
+" let s:dark_magenta = "#702c51"  " 05 DarkMagenta  ANSI Magenta
+" let s:dark_cyan    = "#274f6b"  " 06 DarkCyan     ANSI Cyan
+" let s:light_gray   = "#cfd5d1"  " 07 LightGray    ANSI White
+" let s:dark_gray    = "#86868b"  " 08 DarkGray     ANSI Bright Black
+" let s:red          = "#c70039"  " 09 Red          ANSI Bright Red
+" let s:green        = "#1e4d1a"  " 0A Green        ANSI Bright Green
+" let s:yellow       = "#d9cf68"  " 0B Yellow       ANSI Bright Yellow
+" let s:blue         = "#476a97"  " 0C Blue         ANSI Bright Blue
+" let s:magenta      = "#aa0d91"  " 0D Magenta      ANSI Bright Magenta
+" let s:cyan         = "#479196"  " 0E Cyan         ANSI Bright Cyan
+" let s:white        = "#ffffff"  " 0F White        ANSI Bright White
 
-" Colors
-let s:red =             "b02428" " 08
-let s:orange =          "de935f" " 09
-let s:light_orange =    "f0c674" " 0A
-let s:green =           "b5bd68" " 0B
-let s:cyan =            "8abeb7" " 0C
-let s:blue =            "81a2be" " 0D
-let s:purple =          "b294bb" " 0E
-let s:dark_red =        "89120a" " 0F
+" Low Key accents in terminal colors
+let s:comment  = "DarkGreen"
+let s:string   = "DarkMagenta"
+let s:keyword  = "DarkBlue"
+let s:type     = "Blue"
+let s:ident    = "Blue"
+let s:url      = "Blue"
+let s:error    = "Red"
+let s:error_bg = "DarkRed"
+let s:warn     = "Red"
 
-" Low Key
-let s:invisible =       "7f7f7f"
-let s:selection =       "cfd5d1"
-let s:light_blue =      "476a97"
-let s:dark_blue =       "262c6a"
-let s:string =          "702c51"
-let s:comment =         "435138"
-let s:url =             "12139f"
-let s:keyword =         s:dark_blue
-let s:class =           s:light_blue
-let s:function =        s:light_blue
-let s:constant =        s:light_blue
-
-let s:fg = "0"
-if &background == "dark"
-  let s:fg = "15"
+if &background ==# "dark"
+  let s:fg        = "White"
+  let s:muted     = "DarkGray"
+  let s:border    = "DarkGray"
+  let s:panel     = "Black"
+  let s:select_fg = "Black"
+  let s:select_bg = "LightGray"
+  let s:search_fg = "Black"
+  let s:search_bg = "Yellow"
+else
+  let s:fg        = "Black"
+  let s:muted     = "DarkGray"
+  let s:border    = "LightGray"
+  let s:panel     = "LightGray"
+  let s:select_fg = "NONE"
+  let s:select_bg = "LightGray"
+  let s:search_fg = "Black"
+  let s:search_bg = "Yellow"
 endif
 
-" Highlighting function
-fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr)
-  if a:guifg != ""
-    exec "hi " . a:group . " guifg=#" . a:guifg
-  endif
-  if a:guibg != ""
-    exec "hi " . a:group . " guibg=#" . a:guibg
-  endif
-  if a:ctermfg != ""
-    exec "hi " . a:group . " ctermfg=" . a:ctermfg
-  endif
-  if a:ctermbg != ""
-    exec "hi " . a:group . " ctermbg=" . a:ctermbg
-  endif
-  if a:attr != ""
-    exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
-  endif
-endfun
+function! s:hi(group, fg, bg, attr) abort
+  let l:parts = ["hi", a:group]
+  call add(l:parts, "ctermfg=" . a:fg)
+  call add(l:parts, "ctermbg=" . a:bg)
+  call add(l:parts, "cterm=" . a:attr)
+  execute join(l:parts, " ")
+endfunction
 
-" Vim editor colors
-call <sid>hi("Directory",     s:dark_blue, "", "4", "", "")
-call <sid>hi("ErrorMsg",      s:white, s:red, "15", "9", "")
-call <sid>hi("MatchParen",    s:selection, s:black, "7", "0",  "reverse")
-call <sid>hi("Underlined",    s:light_blue, "", "12", "", "none")
-call <sid>hi("Visual",        "", s:selection, "", "7", "")
-call <sid>hi("WarningMsg",    s:red, "", "9", "", "")
-call <sid>hi("Title",         s:dark_blue, "", "4", "", "none")
-call <sid>hi("NonText",       s:white, s:white, "", "none", "")
-call <sid>hi("Normal",        s:black, "", "", "none", "")
-call <sid>hi("LineNr",        s:very_light_gray, s:white, "7", "none", "")
-call <sid>hi("StatusLine",    "080808", "eeeeee", "0", "7", "bold")
-call <sid>hi("StatusLineNC",  "b2b2b2", "eeeeee", "8", "7", "none")
-call <sid>hi("VertSplit",     s:white, s:white, "15", "15", "")
-call <sid>hi("WinSeparator",  s:white, s:white, "7", "", "")
-call <sid>hi("CursorLine",    "", s:white, "", "", "none")
-call <sid>hi("CursorLineNr",  s:gray, s:very_light_gray, "8", "7", "none")
-call <sid>hi("CursorLineFold",s:gray, s:very_light_gray, "8", "7", "none")
-call <sid>hi("CursorLineSign",s:gray, s:very_light_gray, "8", "7", "none")
-call <sid>hi("FoldColumn",    s:gray, s:white, "8", "none", "")
-call <sid>hi("SignColumn",    s:white, s:white, "15", "none", "")
-call <sid>hi("PMenu",         s:black, s:very_light_gray, "0", "7", "none")
-call <sid>hi("PMenuSbar",     s:black, s:light_gray, "0", "8", "none")
-call <sid>hi("PMenuSel",      s:black, s:light_gray, "15", "8", "none")
-call <sid>hi("PMenuThumb",    s:black, s:dark_gray, "0", "8", "none")
-call <sid>hi("Search",        s:black, "fff595", s:fg, "11", "none")
-call <sid>hi("CurSearch",     s:black, "fff595", s:fg, "11", "none")
-call <sid>hi("TabLine",       "b2b2b2", "eeeeee", "8", "7", "none")
-call <sid>hi("TabLineFill",   "080808", "eeeeee", "0", "7", "none")
-call <sid>hi("TabLineSel",    s:black, s:white, "0", "15", "none")
+" Base / editor
+call s:hi("Normal",       "NONE",      "NONE",      "NONE")
+call s:hi("CursorLine",   "NONE",      "NONE",      "NONE")
+call s:hi("ColorColumn",  "NONE",      s:panel,     "NONE")
+call s:hi("CursorColumn", "NONE",      s:panel,     "NONE")
+call s:hi("LineNr",       s:border,    "NONE",      "NONE")
+call s:hi("CursorLineNr", "NONE",      s:border,    "bold")
+call s:hi("VertSplit",    s:border,    "NONE",      "NONE")
+call s:hi("WinSeparator", s:border,    "NONE",      "NONE")
+call s:hi("SignColumn",   "NONE",      "NONE",      "NONE")
+call s:hi("FoldColumn",   s:muted,     "NONE",      "NONE")
+call s:hi("NonText",      s:muted,     "NONE",      "NONE")
+call s:hi("SpecialKey",   s:muted,     "NONE",      "NONE")
 
-" Standard syntax highlighting
-call <sid>hi("Comment",        s:comment, "", "2", "", "")
-call <sid>hi("SpecialComment", s:comment, "", "2", "", "")
-call <sid>hi("Constant",       s:constant, "", "12", "", "")
-call <sid>hi("Error",          s:white, s:red, "15", "9", "")
-call <sid>hi("Function",       s:function, "", "12", "", "")
-call <sid>hi("Identifier",     s:class, "", "12", "", "none")
-call <sid>hi("Keyword",        s:dark_blue, "", "4", "", "")
-call <sid>hi("PreProc",        s:dark_blue, "", "4", "", "")
-call <sid>hi("Special",        s:black, "", "0", "", "")
-call <sid>hi("Statement",      s:keyword, "", "4", "", "none")
-call <sid>hi("String",         s:string, "", "5", "", "")
-call <sid>hi("Todo",           s:comment, s:white, "2", "15", "bold")
-call <sid>hi("Type",           s:class, "", "12", "", "none")
-call <sid>hi("Typedef",        s:class, "", "12", "", "")
+" Menus / status
+call s:hi("StatusLine",   s:fg,        s:panel,     "bold")
+call s:hi("StatusLineNC", s:muted,     s:panel,     "NONE")
+call s:hi("TabLine",      s:muted,     s:panel,     "NONE")
+call s:hi("TabLineFill",  s:muted,     s:panel,     "NONE")
+call s:hi("TabLineSel",   s:fg,        "NONE",      "bold")
+call s:hi("Pmenu",        s:fg,        "NONE",      "NONE")
+call s:hi("PmenuSel",     s:select_fg, s:select_bg, "NONE")
+call s:hi("PmenuSbar",    "NONE",      "NONE",      "NONE")
+call s:hi("PmenuThumb",   "NONE",      s:panel,     "NONE")
+call s:hi("PmenuBorder",  s:border,    "NONE",      "NONE")
+call s:hi("FloatBorder",  s:border,    "NONE",      "NONE")
 
-" CSS highlighting
-call <sid>hi("cssBraces",       s:black, "", "0", "", "")
-call <sid>hi("cssClassName",    s:black, "", "0", "", "")
-call <sid>hi("cssClassNameDot", s:black, "", "0", "", "")
+" Selection / search
+call s:hi("Visual",       s:select_fg, s:select_bg, "NONE")
+call s:hi("Search",       s:search_fg, s:search_bg, "NONE")
+call s:hi("CurSearch",    s:search_fg, s:search_bg, "bold")
+call s:hi("IncSearch",    s:search_fg, s:search_bg, "bold")
+call s:hi("MatchParen",   "White",     s:type,      "NONE")
 
-" SASS highlighting
-call <sid>hi("sassClassChar", s:black, "", "0", "", "")
-call <sid>hi("sassClass",     s:black, "", "0", "", "")
+" Messages
+call s:hi("Directory",    s:keyword,   "NONE",      "NONE")
+call s:hi("Title",        s:keyword,   "NONE",      "bold")
+call s:hi("Underlined",   s:url,       "NONE",      "underline")
+call s:hi("WarningMsg",   s:warn,      "NONE",      "NONE")
+call s:hi("ErrorMsg",     "White",     s:error_bg,  "NONE")
+call s:hi("MoreMsg",      s:type,      "NONE",      "bold")
+call s:hi("Question",     s:type,      "NONE",      "bold")
 
-" Markdown highlighting
-call <sid>hi("markdownUrl",              s:url, "", "12", "", "")
-call <sid>hi("markdownHeadingDelimiter", s:dark_blue, "", "4", "", "")
+" Diagnostics
+call s:hi("DiagnosticUnderlineError", "NONE", "NONE", "NONE")
+call s:hi("DiagnosticUnderlineWarn",  "NONE", "NONE", "NONE")
+call s:hi("DiagnosticUnderlineInfo",  "NONE", "NONE", "NONE")
+call s:hi("DiagnosticUnderlineHint",  "NONE", "NONE", "NONE")
 
-" Directory highlighting
-call <sid>hi("NERDTreeDirSlash",  s:dark_blue, "", "4", "", "")
-call <sid>hi("NERDTreeExecFile",  s:light_blue, "", "12", "", "")
+" Syntax
+call s:hi("Comment",        s:comment,  "NONE",     "NONE")
+call s:hi("SpecialComment", s:comment,  "NONE",     "NONE")
+call s:hi("Constant",       s:ident,    "NONE",     "NONE")
+call s:hi("String",         s:string,   "NONE",     "NONE")
+call s:hi("Character",      s:string,   "NONE",     "NONE")
+call s:hi("Number",         s:keyword,  "NONE",     "NONE")
+call s:hi("Boolean",        s:keyword,  "NONE",     "NONE")
+call s:hi("Float",          s:keyword,  "NONE",     "NONE")
+call s:hi("Identifier",     s:ident,    "NONE",     "NONE")
+call s:hi("Function",       s:type,     "NONE",     "NONE")
+call s:hi("Statement",      s:keyword,  "NONE",     "NONE")
+call s:hi("Conditional",    s:keyword,  "NONE",     "NONE")
+call s:hi("Repeat",         s:keyword,  "NONE",     "NONE")
+call s:hi("Label",          s:keyword,  "NONE",     "NONE")
+call s:hi("Operator",       s:fg,       "NONE",     "NONE")
+call s:hi("Keyword",        s:keyword,  "NONE",     "NONE")
+call s:hi("Exception",      s:keyword,  "NONE",     "NONE")
+call s:hi("PreProc",        s:keyword,  "NONE",     "NONE")
+call s:hi("Include",        s:keyword,  "NONE",     "NONE")
+call s:hi("Define",         s:keyword,  "NONE",     "NONE")
+call s:hi("Macro",          s:fg,       "NONE",     "NONE")
+call s:hi("PreCondit",      s:keyword,  "NONE",     "NONE")
+call s:hi("Type",           s:type,     "NONE",     "NONE")
+call s:hi("StorageClass",   s:keyword,  "NONE",     "NONE")
+call s:hi("Structure",      s:type,     "NONE",     "NONE")
+call s:hi("Typedef",        s:type,     "NONE",     "NONE")
+call s:hi("Special",        s:fg,       "NONE",     "NONE")
+call s:hi("SpecialChar",    s:string,   "NONE",     "NONE")
+call s:hi("Tag",            s:type,     "NONE",     "NONE")
+call s:hi("Delimiter",      s:fg,       "NONE",     "NONE")
+call s:hi("Debug",          s:error,    "NONE",     "NONE")
+call s:hi("Todo",           s:comment,  "NONE",     "bold")
+call s:hi("Error",          "White",    s:error_bg, "NONE")
 
-" Remove functions
-delf <sid>hi
+" Markdown
+call s:hi("markdownUrl",              s:url,      "NONE", "underline")
+call s:hi("markdownHeadingDelimiter", s:keyword,  "NONE", "bold")
+call s:hi("markdownCode",             s:string,   "NONE", "NONE")
+call s:hi("markdownCodeBlock",        s:string,   "NONE", "NONE")
+
+delfunction s:hi
